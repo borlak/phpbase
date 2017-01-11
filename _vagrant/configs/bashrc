@@ -1,0 +1,21 @@
+# .bashrc
+
+# User specific aliases and functions
+alias nano="nano -w -T4 -E"
+alias grep="grep --color=always"
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+function git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+PS1='[\[\033[1;34m\]\u@\H\[\033[00m\]] \W/ \[\033[33m\]$(git_branch)\[\033[00m\]\$ '
+
+function git_tag {
+    git tag $1
+    git tag -f release
+    git push --force origin refs/tags/release:refs/tags/release
+}
