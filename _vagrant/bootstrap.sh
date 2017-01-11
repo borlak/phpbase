@@ -23,6 +23,7 @@ yum install nginx -y
 yum install php-fpm -y
 yum install mysql -y
 yum install mysql-server -y
+yum install redis -y
 
 #####################
 # Misc stuff I like #
@@ -33,7 +34,6 @@ yum install nano -y
 yum install htop -y
 yum install telnet -y
 yum install mlocate -y
-updatedb
 
 ##############################################
 # Setup any configs before starting services #
@@ -56,14 +56,23 @@ sudo sed -i "s/short_open_tag = Off/short_open_tag = On/g" /etc/php.ini
 # Enable and start services #
 #############################
 chkconfig nginx on
+chkconfig redis on
 chkconfig php-fpm on
 chkconfig mysqld on
 service nginx start
+service redis start
 service php-fpm start
 service mysqld start
 
-# Re-link www dir to /vagrant for web server
+##############################################
+# Re-link www dir to /vagrant for web server #
+##############################################
 if ! [ -L /var/www ]; then
   rm -rf /var/www
   ln -fs /vagrant /var/www
 fi
+
+##################
+# Final commands #
+##################
+updatedb

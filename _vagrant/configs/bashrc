@@ -9,6 +9,7 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Prompt which also shows git branch
 function git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
