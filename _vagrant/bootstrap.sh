@@ -40,6 +40,7 @@ yum install mlocate -y
 ##############################################
 cp /vagrant/_vagrant/configs/nginx.conf /etc/nginx
 cp /vagrant/_vagrant/configs/php-fpm-www.conf /etc/php-fpm.d/www.conf
+chown -R nginx:root /var/log/php-fpm
 
 #######
 # PHP #
@@ -50,6 +51,8 @@ yum install php-redis -y
 sudo sed -i "s/;date.timezone =/date.timezone = UTC/g" /etc/php.ini
 # Short tags
 sudo sed -i "s/short_open_tag = Off/short_open_tag = On/g" /etc/php.ini
+# Display errors
+sudo sed -i "s/display_errors = Off/display_errors = On/g" /etc/php.ini
 
 
 #############################
