@@ -8,16 +8,26 @@ $configuration = array(
 		// List of available database servers and their databases.
 		'databases' => array(
 			'main' => array(
-				'database'	=> 'mc',
-				'user'		=> 'root',
-				'password'	=> '',
+				'database'	=> 'phpbase',
+				'user'		=> 'phpbase',
+				'password'	=> 'phpbase',
 				'host'		=> 'localhost',
 			)
 		),
-		// List of memcached servers
+		// List of caching options
 		'cache' => array(
-            'memcached' => array(
+            'local' => array(
                 'enabled' => true,
+            ),
+            'redis' => array(
+                'enabled' => true,
+                'server' => array(
+                    'host' => 'localhost',
+                    'port' => 6379
+                ),
+            ),
+            'memcached' => array(
+                'enabled' => false,
                 'compression' => true,
                 'hash_consistent' => true,
                 'servers' => array(
@@ -29,9 +39,6 @@ $configuration = array(
             ),
             'apc' => array( // not implemented yet -- want to create a kind of decorator design for caching instead
                 'enabled' => false,
-            ),
-            'local' => array(
-                'enabled' => true,
             ),
 		),
         // Access Control Levels
@@ -46,6 +53,7 @@ $configuration = array(
             'permissions' => array(
                 // Permission => level,include parents in permission?
                 'Example.something' => array('User', true),
+                'Index.index' => array('User', true),
                 'Index.phpinfo' => array('Super', true),
             ),
         ),

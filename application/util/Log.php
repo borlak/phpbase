@@ -15,13 +15,13 @@ class Util_Log {
     const MAX_LINES = 2000;
 
     /**
-     * @var \Util\Log
+     * @var Util_Log
      */
     private static $_instance = null;
 
     /**
      * Get class singleton.
-     * @return \Util\Log
+     * @return Util_Log
      */
     public static function getInstance() {
         if(is_null(self::$_instance)) {
