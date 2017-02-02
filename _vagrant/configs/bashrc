@@ -3,6 +3,7 @@
 # User specific aliases and functions
 alias nano="nano -w -T4 -E"
 alias grep="grep --color=always"
+alias phpdb="mysql -uphpbase -pphpbase phpbase"
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then

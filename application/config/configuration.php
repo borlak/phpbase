@@ -55,6 +55,9 @@ $configuration = array(
                 'Example.something' => array('User', true),
                 'Index.index' => array('User', true),
                 'Index.phpinfo' => array('Super', true),
+                'Account.login' => array('User', true),
+                'Account.create' => array('User', true),
+                'Account.profile' => array('User', true),
             ),
         ),
 		// Password encryption level.  higher = better, but slower.

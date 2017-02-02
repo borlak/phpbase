@@ -16,20 +16,27 @@ $Log->setLogLevel($log_level);
 // Default to Index
 if(!isset($_SERVER['REQUEST_URI'])) {
     $controller_name = ucfirst('index');
+    $action_name = 'index';
 } else {
-    $parts = explode('/', $_SERVER['REQUEST_URI'], 10);
+    $request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
+    $parts = explode('/', $request_uri, 10);
 
     if(count($parts) >= 2 && !empty($parts[1])) {
         $controller_name = ucfirst($parts[1]);
     } else {
         $controller_name = ucfirst('index');
     }
+
+    if(count($parts) >= 3 && !empty($parts[2])) {
+        $action_name = $parts[2];
+    } else {
+        $action_name = 'index';
+    }
 }
 
 // Find Controller
-$controller =      "Controller_{$controller_name}";
-$action_name =     isset($url_path[1]) ? $url_path[1] : 'index';
-$action =          $action_name.'Action';
+$controller = "Controller_{$controller_name}";
+$action =     $action_name.'Action';
 
 // Create ErrorController and Util classes
 $Util = Util::getInstance();

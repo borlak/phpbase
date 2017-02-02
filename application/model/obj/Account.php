@@ -1,6 +1,6 @@
 <?php
 /**
- * Account obj
+ * Account object
  *
  * @author mmorrison
  */

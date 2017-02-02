@@ -2,6 +2,17 @@
 /**
  * Database Row object
  *
+ * Any superclass must define these variables:
+ * $_cache_keys -> unique or semi-unique data that can be used to save an object in
+ *                 memory and will be used to grab the data from the database.
+ * $_table_name -> the table name of the class
+ * $_database_name -> the database name of the class
+ *
+ * This class assumes your tables are setup with a column "id" as the primary key.
+ *
+ * The getBy function will automatically reach out the cache first and then to the
+ * database as a backup, using passed in variables and values.
+ *
  * @author mmorrison
  */
 class Model_Obj_Saveable {
@@ -64,7 +75,7 @@ class Model_Obj_Saveable {
                     if($this->_original_values[$variable] != $this->$variable) {
                         $Cache->delete($cache_key);
                     }
-                    $Cache->set($cache_key, $this, Util_Redis::getInstance(), Util_Redis::COMPRESS);
+                    $Cache->set($cache_key, $this);
                 }
             }
         }
@@ -77,10 +88,10 @@ class Model_Obj_Saveable {
      * part of its static $_cache_keys variable.
      * If $forced_lowercase is true [default], the end resulting cache-key is forced lowercase,
      * so same $values but with mixed case will end up pointing to the same cache - (ie. hat and hAt)
-     * @param string     $variable
-     * @param string|int $value
-     * @param boolean    $forced_lowercase force the cache key to be all lowercase?
-     * @param string     $unique_id unique ID for the database connection, if needed
+     * @param string|array  $variable
+     * @param string|int    $value
+     * @param boolean       $forced_lowercase force the cache key to be all lowercase?
+     * @param string        $unique_id unique ID for the database connection, if needed
      * @return App_Model_Obj_called_class
      * @throws Exception
      */
@@ -92,7 +103,7 @@ class Model_Obj_Saveable {
         $called_class = get_called_class();
         $called_class_name = end(explode('\\', $called_class));
 
-        // Cache key = <classname>_<variable(s)>_<value(s)> ie. account_id_3
+        // Cache key = <classname>_<variable(s)>_<value(s)> ie. account_id_name_3_joe
         $cache_key = $called_class_name.'_';
         $where = '';
         $where_array = array();
@@ -146,6 +157,8 @@ class Model_Obj_Saveable {
      * This will automatically save (sql UPDATE) the data associated with the
      * creation of this object through the constructor.  It will only update the
      * differences since its construction.
+     * This function assumes your data/tables are setup with "id" as the primary
+     * key.
      * You may need to specify $unique_id if you are worried about this function
      * stepping on a current resultset (ie. saving a bunch of objects in a loop).
      * @param string $unique_id

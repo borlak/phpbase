@@ -137,7 +137,7 @@ class View_HTML {
         $this->_vars['page_title'] = $this->_page_title;
         ob_start();
 
-        include(self::getViewPath().'/'.$view_template_file);
+        include self::getViewPath().'/'.$view_template_file;
 
         // Now that page is drawn, remove any redirect-data
         if(isset($_SESSION['redirect-data'])) {

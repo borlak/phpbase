@@ -30,6 +30,10 @@ class Controller_Error {
     public function indexAction($error) {
         $Log = Util_Log::getInstance();
         $Log->log(Util_Log::ERROR, $error);
+
+        $HTML = new View_HTML();
+        $HTML->error = $error;
+        echo $HTML->render('Error/Index.php');
     }
 
     public function exceptionHandler($exception) {

@@ -64,7 +64,7 @@ function process_error_backtrace($errno, $errstr, $errfile, $errline, $errcontex
         exit(1);
     }
 }
-set_error_handler('process_error_backtrace');
+set_error_handler('process_error_backtrace', E_ERROR);
 
 // Start session
 session_start();
@@ -78,5 +78,8 @@ spl_autoload_register(function($class_name) {
 
     require $path;
 });
+
+// Diagnostic function
+function dd() { echo '<pre>'; array_map(function($x) { var_dump($x); }, func_get_args()); echo '</pre>'; die; }
 
 require_once 'config/configuration.php';

@@ -5,7 +5,7 @@
  * @author mmorrison
  */
 
-class DB extends PDO {
+class Util_DB extends PDO {
     /**
      * @var PDOStatement
      */
