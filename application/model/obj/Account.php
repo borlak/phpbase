@@ -38,26 +38,6 @@ class Model_Obj_Account extends Model_Obj_Saveable {
      */
     public $acl;
     /**
-     * @var int
-     */
-    public $source_id;
-    /**
-     * @var int
-     */
-    public $gems;
-    /**
-     * @var string
-     */
-    public $website;
-    /**
-     * @var string
-     */
-    public $sex;
-    /**
-     * @var string
-     */
-    public $birthday;
-    /**
      * @var string
      */
     public $created_date;
