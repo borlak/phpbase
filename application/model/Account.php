@@ -73,9 +73,6 @@ class Model_Account {
         if(!isset($row['acl'])) {
             return array('success' => false, 'message' => 'ACL is required');
         }
-        if(!isset($row['source_id'])) {
-            return array('success' => false, 'message' => 'Source ID is required');
-        }
 
         if($this->getByName($row['name']) !== false) {
             return array('success' => false, 'message' => 'Name already exists');
@@ -84,31 +81,32 @@ class Model_Account {
         $DB = Util_DB::getInstance();
         $Bcrypt = new Util_Bcrypt();
 
+        $name = ucfirst(strtolower(trim($row['name'])));
         $password_salt = $Bcrypt->getSalt();
         $password_hash = crypt($row['password'], $password_salt);
 
         $DB->query("
-            insert into account (name, password, password_salt, email, acl, source_id, created_date, updated_date)
+            insert into account (name, password, password_salt, email, acl, created_date, updated_date)
             values (
                 :name,
                 :password,
                 :password_salt,
                 :email,
                 :acl,
-                :source_id,
                 NOW(),
                 NOW()
             )",
             array(
-                ':name' =>          ucfirst(strtolower(trim($row['name']))),
+                ':name' =>          $name,
                 ':password' =>      $password_hash,
                 ':password_salt' => $password_salt,
                 ':email' =>         trim($row['email']),
                 ':acl' =>           $row['acl'],
-                ':source_id' =>     $row['source_id'],
             )
         );
 
-        return array('success' => true, 'message' => 'Account created');
+        return array('success' => true,
+                     'message' => 'Account created',
+                     'obj' => Model_Obj_Account::getBy('name',$name,true));
     }
 }

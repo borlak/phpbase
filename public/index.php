@@ -57,6 +57,13 @@ foreach($acl_permissions as $role => $permission) {
 }
 unset($acl, $acl_levels, $acl_permissions);
 
+// Load up the account data if the user has logged in
+if(isset($_SESSION['account_id'])) {
+    if(($obj = Model_Obj_Account::getBy('id', $_SESSION['account_id']))) {
+        $_SESSION['account'] = $obj;
+    }
+}
+
 $Log->log(Util_Log::DEBUG, "Memory usage before controller: ".$Util->getMemoryUsage());
 
 // Create Controller and attempt to call the method asked for, otherwise error out

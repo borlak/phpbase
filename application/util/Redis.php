@@ -18,8 +18,6 @@ class Util_Redis extends Redis {
     private static $_redis = null;
 
     const DEFAULT_TIMEOUT = 86400;
-    // bit flags
-    const COMPRESS  = 0x1;
 
     /**
      * @var Util_Redis
@@ -65,6 +63,8 @@ class Util_Redis extends Redis {
         if(!parent::connect($server['host'], $server['port'])) {
             throw new Exception("Redis server failed to connect host[{$server['host']}] port[{$server['port']}]");
         }
+
+        parent::setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_IGBINARY);
     }
 
     /**

@@ -90,12 +90,13 @@ class Model_Obj_Saveable {
      * so same $values but with mixed case will end up pointing to the same cache - (ie. hat and hAt)
      * @param string|array  $variable
      * @param string|int    $value
+     * @param boolean       $reload force a load from DB and restore in cache
      * @param boolean       $forced_lowercase force the cache key to be all lowercase?
      * @param string        $unique_id unique ID for the database connection, if needed
      * @return App_Model_Obj_called_class
      * @throws Exception
      */
-    public static function getBy($variable, $value, $forced_lowercase = true, $unique_id = false) {
+    public static function getBy($variable, $value, $reload = false, $forced_lowercase = true, $unique_id = false) {
         self::checkSetup();
 
         $DB = Util_DB::getInstance(static::$_database_name, $unique_id);
@@ -141,16 +142,20 @@ class Model_Obj_Saveable {
             $cache_key = strtolower($cache_key);
         }
 
-        if(($obj = $Cache->get($cache_key)) === false) {
+        if($reload || ($obj = $Cache->get($cache_key)) === false) {
             $sql = "select * from ".static::$_table_name." where $where";
             $result = $DB->query($sql, $where_array)->fetchOne();
 
-            $obj = new $called_class($result);
+            if($result === false) {
+                $obj = '';
+            } else {
+                $obj = new $called_class($result);
+            }
 
-            $Cache->set($cache_key, $obj, Util_Redis::DEFAULT_TIMEOUT, Util_Redis::COMPRESS);
+            $Cache->set($cache_key, $obj, Util_Redis::DEFAULT_TIMEOUT);
         }
 
-        return $obj;
+        return $obj == '' ? false : $obj;
     }
 
     /**

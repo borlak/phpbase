@@ -24,6 +24,7 @@ class Controller_Account {
         $accountObj = Model_Obj_Account::getBy('name', $login);
         if($accountObj === false) {
             $HTML->redirect('/index', array('error' => 'Account does not exist'));
+            die;
         }
 
         $hash = crypt($password, $accountObj->password_salt);
@@ -36,9 +37,9 @@ class Controller_Account {
         // Login validated, lets remove password info before saving into session
         unset($accountObj->password, $accountObj->password_salt);
 
-        $_SESSION['account'] = $accountObj;
+        $_SESSION['account_id'] = $accountObj->id;
 
-        echo $HTML->render('Account/Login.php');
+        $HTML->redirect('/index');
     }
 
     public function logoutAction() {
@@ -83,7 +84,6 @@ class Controller_Account {
             'name' => $name,
             'password' => $password,
             'email' => $email,
-            'source_id' => $source_id,
             'acl' => 'User',
         ));
 
