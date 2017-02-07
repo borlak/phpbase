@@ -3,14 +3,19 @@ PHP Base Installation with SASS and Bootstrap (in development)
 
 This is meant as a barebones installation for creating a simple PHP website.
 
-Features
+##Features
 * PHP MVC
 * SASS with compass
 * Bootstrap
 
-Vagrant Setup
+##Vagrant Setup
 * CentOS 6.7 (vagrant)
 * PHP 5.3.3
 * MySQL 5.1.73
 * Nginx
 * Redis
+
+##Installation
+For your dev environment, you will need to install Bootstrap for Compass via Ruby.
+
+`$ gem install bootstrap-sass`
