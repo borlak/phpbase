@@ -3,6 +3,8 @@
         <title><?=$this->page_title?></title>
         <?=$this->css?>
         <?=$this->javascript?>
+        
+        <link href="/css/styles.css" rel="stylesheet" type="text/css" />
     </head>
 <body>
 <ul id="header-nav">
