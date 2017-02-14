@@ -56,6 +56,7 @@ $configuration = array(
                 'Index.index' => array('User', true),
                 'Index.phpinfo' => array('Super', true),
                 'Account.login' => array('User', true),
+                'Account.logout' => array('User', true),
                 'Account.create' => array('User', true),
                 'Account.profile' => array('User', true),
             ),

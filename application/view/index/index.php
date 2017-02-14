@@ -1,34 +1,86 @@
 <?=$this->getHeader()?>
 
-<h2>Welcome to <?=APP_NAME?></h2>
 
-<? if(isset($_SESSION['account'])): ?>
-<div>
-    Welcome <?=$_SESSION['account']->name?>
-</div>
-<? endif ?>
 
-<div>
-    <h3>Login</h3>
-    <form action="/account/login" method="post">
-        Login <input type="text" name="login">
-        <br>
-        Password <input type="password" name="password">
-        <input type="submit">
-    </form>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><?=APP_NAME?></a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse navbar-right">
+      <? if(isset($_SESSION['account'])): ?>
+      <a class="navbar-brand" href="#">Welcome, <?=$_SESSION['account']->name?></a>
+      <form action="/account/logout" class="navbar-form navbar-right" method="post">
+        <button type="submit" class="btn btn-success">Logout</button>
+      </form>
+      <? else: ?>
+      <form action="/account/login" class="navbar-form" method="post">
+        <div class="form-group">
+          <input type="text" name="login" placeholder="Account" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Sign in</button>
+      </form>
+      <? endif ?>
+    </div><!--/.navbar-collapse -->
+  </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h1>Hello, world!</h1>
+    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+  </div>
 </div>
 
-<div>
-    <h3>Create Account</h3>
-    <form action="/account/create" method="post">
-        <input type="hidden" name="source_id" value="1">
-        Name <input type="text" name="name">
-        <br>
-        Password <input type="password" name="password">
-        <br>
-        Email <input type="password" name="email">
-        <input type="submit" value="Create">
-    </form>
-</div>
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+   </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div>
+  </div>
+
+  <hr>
+
+  <footer>
+    <p>&copy; 2016 Company, Inc.</p>
+  </footer>
+</div> <!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>');</script>
+<script src="js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
 
 <?=$this->getFooter()?>
