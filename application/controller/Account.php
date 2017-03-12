@@ -59,7 +59,6 @@ class Controller_Account {
         $name = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
         $email = trim(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
-        $source_id = filter_input(INPUT_POST, 'source_id', FILTER_VALIDATE_INT);
 
         if(!$name || !ctype_alnum($name)) {
             $HTML->redirect('/index', array('error' => 'Name must be an alphanumeric strings'));
@@ -71,10 +70,6 @@ class Controller_Account {
         }
         if(!$email) {
             $HTML->redirect('/index', array('error' => 'No email provided or invalid email'));
-            die;
-        }
-        if(!$source_id) {
-            $HTML->redirect('/index', array('error' => 'No source id provided'));
             die;
         }
 

@@ -14,7 +14,17 @@ class Controller_Index {
     public function indexAction() {
         $HTML = new View_HTML();
         $HTML->getRedirectedData();
-        echo $HTML->render('Index/Index.php');
+        echo $HTML->render('index/index.php');
+    }
+
+    public function signinAction() {
+        $HTML = new View_HTML();
+        $HTML->getRedirectedData();
+        echo $HTML->render('index/signin.php');
+    }
+
+    public function createAction() {
+        return $this->signinAction();
     }
 
     public function phpinfoAction() {
